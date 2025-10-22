@@ -128,3 +128,33 @@ def insert_value(patient:patient):
 info_detail={"name":"md firdosh alam","age":20,"email":"md@hdfc.com","mob":{"mob":90898788}}
 p=patient(**info_detail)
 insert_value(p)
+print()
+print()
+
+
+
+from pydantic import BaseModel,EmailStr,field_validator,model_validator
+from typing import List,Dict
+
+class patient(BaseModel):
+    name:str
+    age:int
+    email:EmailStr
+    mob_details:Dict[str,int]
+    # use of model_validator
+    @model_validator(mode="after")
+    @classmethod
+    def validator_emergency_contact(cls,model):
+        if model.age >50 and "emergency" not in model.mob_details:
+             raise ValueError("patient older then 60 must an emergency contact")
+        return model
+
+def insert_value(patient:patient):
+        print(patient.name)
+        print(patient.age)
+        print(patient.email)
+        print(patient.mob_details)
+info_detail={"name":"md firdosh alam","age":65
+             ,"email":"md@hdfc.com","mob_details":{"mob":90898788,"emergency":29202020}}
+p=patient(**info_detail)
+insert_value(p)

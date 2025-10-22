@@ -12,11 +12,11 @@ def load_data():
 
 @app.get('/')
 def home():
-    return {"message": "patient management system "}
+    return {"message_1": "patient management system "}
 
 @app.get ('/about')
 def about():
-    return{"message":"A fully function api to manage your patient recode "}
+    return{"message_2":"A fully function api to manage your patient recode "}
 
 @app.get('/view')
 def view():
